@@ -35,13 +35,19 @@ assert(lease_years_25[2]['Unit Name'] == 'Seacroft Gate (Chase) block 2-Telecom 
 assert(lease_years_25[3]['Unit Name'] == 'Seacroft Gate (Chase) - Block 2, WYK 0414')
 assert(len(lease_years_25) == 4)
 
-
-
 # Calculate the total rent for the list (where 'Lease Years' == 25)
-
-
+total_rent = 0
+for row in lease_years_25:
+    total_rent += float(row['Current Rent'])
 # Print the total to the console
+print("\nThe total annual rent for phone masts where 'Lease Years' == 25", end="")
+print(", is £{0:.2f}".format(total_rent),  "per year.")
+print("\nThe total rent for these phone masts over the length of the 25 years", end="")
+print(", is £{0:.2f}".format(total_rent*25))
 
+# Check that the correct totals are calculated
+assert(total_rent == 46500)
+assert(total_rent*25 == 1162500)
 
 # Create a dictionary with a count of each tenant's masts, i.e.
 #   {'Tenant': mast_count, etc.}
