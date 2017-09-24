@@ -51,9 +51,26 @@ assert(total_rent*25 == 1162500)
 
 # Create a dictionary with a count of each tenant's masts, i.e.
 #   {'Tenant': mast_count, etc.}
-
+tenant_masts = {}
+import re
+for tenant in sorted_by_rent:
+    #if x['Tenant Name'] in tenant_masts:
+    if tenant['Tenant Name'].replace('.', '') in tenant_masts:
+        tenant_masts[tenant['Tenant Name'].replace('.', '')] += 1
+    else:
+        tenant_masts[tenant['Tenant Name'].replace('.', '')] = 1
 
 # Print this dictionary in a readable format
+print("\n\n'Tenant Name' (count of their phone masts):")
+for tenant in tenant_masts.keys():
+    print(tenant, "\t", end="")
+    print("(" + str(tenant_masts[tenant]) + ")")
+
+
+
+
+
+
 
 
 # List the data where 'Lease Start Date' is between 1st June 1999 and 31st August 2007
