@@ -76,10 +76,29 @@ for row in sorted_by_rent:
     preformatted_date = datetime.strftime(find_date, '%Y/%m/%d')
     if(preformatted_date > FIRST_LEASE_START) and (preformatted_date < END_LEASE_START):
         formatted_date = datetime.strftime(find_date, '%d/%m/%Y')
-        list_by_lease_start.append({"Property":row['Property Name'], "Date":formatted_date})
+        list_by_lease_start.append({"Unit":row['Unit Name'], "Date":formatted_date})
 
 # Print this data, with the date in the format 'DD/MM/YYYY'
-print("\n\nData entries with 01/06/1999 < 'Lease Start Year' < 31/08/2007:")
-print("'Property Name' ('Lease Start Year')\n")
+print("\n\nData entries with 01/06/1999 < 'Lease Start Date' < 31/08/2007:")
+print("'Unit Name' ('Lease Start Date')\n")
 for data in list_by_lease_start:
-    print(data["Property"] + "\t(" + data["Date"] + ")")
+    print(data["Unit"] + "\t(" + data["Date"] + ")")
+
+# Unit tests for 'Lease Start Date' filter
+assert(len(list_by_lease_start) == 5)
+for data in list_by_lease_start:
+    assert any(d["Unit"] == "Potternewton Est Playing Field" for d in list_by_lease_start)
+    if(data["Unit"] == "Potternewton Est Playing Field"):
+        assert data["Date"] == "24/06/1999"
+    assert any(d["Unit"] == "Queenswood Hgt-Telecom App." for d in list_by_lease_start)
+    if(data["Unit"] == "Queenswood Hgt-Telecom App."):
+        assert data["Date"] == "08/11/2004"
+    assert any(d["Unit"] == "Burnsall Grange CSR 37865" for d in list_by_lease_start)
+    if(data["Unit"] == "Burnsall Grange CSR 37865"):
+        assert data["Date"] == "26/07/2007"
+    assert any(d["Unit"] == "Seacroft Gate (Chase) block 2-Telecom App." for d in list_by_lease_start)
+    if(data["Unit"] == "Seacroft Gate (Chase) block 2-Telecom App."):
+        assert data["Date"] == "30/01/2004"
+    assert any(d["Unit"] == "Seacroft Gate (Chase) - Block 2, WYK 0414" for d in list_by_lease_start)
+    if(data["Unit"] == "Seacroft Gate (Chase) - Block 2, WYK 0414"):
+        assert data["Date"] == "21/08/2007"
