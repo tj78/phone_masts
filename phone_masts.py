@@ -1,4 +1,5 @@
 import csv
+from datetime import datetime
 
 # Read in the CSV file
 with open('Mobile Phone Masts.csv', newline='') as csvfile:
@@ -66,14 +67,19 @@ for tenant in tenant_masts.keys():
     print(tenant, "\t", end="")
     print("(" + str(tenant_masts[tenant]) + ")")
 
-
-
-
-
-
-
-
 # List the data where 'Lease Start Date' is between 1st June 1999 and 31st August 2007
-
+FIRST_LEASE_START = '1999/06/01'
+END_LEASE_START = '2007/08/31'
+list_by_lease_start = []
+for row in sorted_by_rent:
+    find_date = datetime.strptime(row['Lease Start Date'],'%d %b %Y')
+    preformatted_date = datetime.strftime(find_date, '%Y/%m/%d')
+    if(preformatted_date > FIRST_LEASE_START) and (preformatted_date < END_LEASE_START):
+        formatted_date = datetime.strftime(find_date, '%d/%m/%Y')
+        list_by_lease_start.append({"Property":row['Property Name'], "Date":formatted_date})
 
 # Print this data, with the date in the format 'DD/MM/YYYY'
+print("\n\nData entries with 01/06/1999 < 'Lease Start Year' < 31/08/2007:")
+print("'Property Name' ('Lease Start Year')\n")
+for data in list_by_lease_start:
+    print(data["Property"] + "\t(" + data["Date"] + ")")
